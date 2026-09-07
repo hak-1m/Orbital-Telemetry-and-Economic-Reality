@@ -20,23 +20,23 @@ This research repository implements a spatial econometric framework that evaluat
 ## 🔬 Mathematical & Econometric Formalization
 
 ### 1. Spatial Radiance Definition
-Nighttime luminosity $NTL_{i,t}$ for country $i$ at time $t$ is defined as integrated spatial radiance across geographic boundary $\Omega_i$:
+Nighttime luminosity **NTL_(i,t)** for country **i** at time **t** is defined as integrated spatial radiance across geographic boundary **Ω_i**:
 
-$$NTL_{i,t} = \iint_{\Omega_i} R(x, y, t) \cdot S(x, y) \, dx \, dy$$
+> **NTL_(i,t) = ∬_(Ω_i) R(x, y, t) × S(x, y) dx dy**
 
 Where:
-* $R(x, y, t)$: Top-of-atmosphere spectral radiance measured in $\text{nW} \cdot \text{cm}^{-2} \cdot \text{sr}^{-1}$.
-* $S(x, y)$: Cloud-free spatial filtering kernel.
+* **R(x, y, t)**: Top-of-atmosphere spectral radiance measured in **nW/cm²·sr** (nanowatts per square centimeter per steradian).
+* **S(x, y)**: Cloud-free spatial filtering kernel.
 
 ### 2. Structural Panel Elasticity Model
-$$\ln(Y_{i,t}) = \alpha_i + \gamma_t + \beta_1 NTL_{i,t} + \beta_2 (NTL_{i,t} \cdot D_{\text{Dev},i}) + \beta_3 (NTL_{i,t} \cdot D_{\text{Oil},i}) + \epsilon_{i,t}$$
+> **ln(Y_(i,t)) = α_i + γ_t + β_1 × NTL_(i,t) + β_2 × (NTL_(i,t) × D_Dev,i) + β_3 × (NTL_(i,t) × D_Oil,i) + ε_(i,t)**
 
 Where:
-* $Y_{i,t}$: Real GDP per capita (`NY.GDP.PCAP.KD`).
-* $\alpha_i$: Country-specific time-invariant fixed effects (geography, baseline electrification).
-* $\gamma_t$: Global macroeconomic time fixed effects (oil price supercycles, global shocks).
-* $D_{\text{Dev},i}$, $D_{\text{Oil},i}$: Structural dummy indicators for developing economy status and oil dependency thresholds.
-* $\epsilon_{i,t}$: Idiosyncratic error term evaluated using Arellano robust heteroskedasticity and autocorrelation-consistent (HAC) covariance matrices.
+* **Y_(i,t)**: Real GDP per capita (`NY.GDP.PCAP.KD`).
+* **α_i**: Country-specific time-invariant fixed effects (geography, baseline electrification).
+* **γ_t**: Global macroeconomic time fixed effects (oil price supercycles, global shocks).
+* **D_Dev,i**, **D_Oil,i**: Structural dummy indicators for developing economy status and oil dependency thresholds.
+* **ε_(i,t)**: Idiosyncratic error term evaluated using Arellano robust heteroskedasticity and autocorrelation-consistent (HAC) covariance matrices.
 
 ---
 
@@ -44,20 +44,20 @@ Where:
 
 Panel Fixed Effects estimation results across the longitudinal dataset (1990–2024):
 
-| Hypothesis / Parameter | Specification | Estimate ($\beta$) | Std. Error | $t$-value | $p$-value | Empirical Status |
+| Hypothesis / Parameter | Specification | Estimate (β) | Std. Error | t-value | p-value | Empirical Status |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Main $H_1$: Macro Coupling** | `ntl_intensity` | **+0.0286** | 0.0017 | 16.575 | `<0.001***` | **Verified** ✅ |
-| **Sub-$H_1$: Development Asymmetry** | `ntl_intensity:is_developing` | **-0.0029** | 0.0005 | -5.626 | `<0.001***` | **Verified** ✅ |
-| **Sub-$H_2$: Predictive Lag ($t+1$)** | `lag(ntl_intensity, 1)` | *NaN* | - | - | - | **Conditional** ⚠️ |
-| **Sub-$H_3$: Stat Quality Substitution**| `SPI Error Margin Interaction` | - | - | - | - | **Verified** ✅ |
-| **Sub-$H_4$: Crisis Sensitivity** | 2008 Great Recession Track | Structural Drop | - | - | Real-time | **Verified** ✅ |
-| **Sub-$H_5$: Resource Curse Isolation** | `ntl_intensity:is_oil_dependent` | **+0.0008** | 0.0007 | 1.115 | `0.265 (ns)` | **Statistically Neutral** ℹ️ |
+| **Main H_1: Macro Coupling** | `ntl_intensity` | **+0.0286** | 0.0017 | 16.575 | `<0.001***` | **Verified** ✅ |
+| **Sub-H_1: Development Asymmetry** | `ntl_intensity:is_developing` | **-0.0029** | 0.0005 | -5.626 | `<0.001***` | **Verified** ✅ |
+| **Sub-H_2: Predictive Lag (t+1)** | `lag(ntl_intensity, 1)` | *NaN* | - | - | - | **Conditional** ⚠️ |
+| **Sub-H_3: Stat Quality Substitution**| `SPI Error Margin Interaction` | - | - | - | - | **Verified** ✅ |
+| **Sub-H_4: Crisis Sensitivity** | 2008 Great Recession Track | Structural Drop | - | - | Real-time | **Verified** ✅ |
+| **Sub-H_5: Resource Curse Isolation** | `ntl_intensity:is_oil_dependent` | **+0.0008** | 0.0007 | 1.115 | `0.265 (ns)` | **Statistically Neutral** ℹ️ |
 
 ### Key Takeaways:
-1. **Baseline Elasticity ($\beta_1 = 0.0286, p < 0.001$)**: Confirms a strong, statistically significant positive coupling between nighttime lights and formal economic output globally.
-2. **Development Asymmetry ($\beta_2 = -0.0029, p < 0.001$)**: Reflects structural differences in growth patterns—emerging markets expand light footprints via horizontal urban sprawl, whereas advanced post-industrial states display energy-efficient, capital-intensive expansion.
-3. **Crisis Sensitivity (Sub-$H_4$)**: Empirical evaluation during the 2008 Great Recession proves that orbital sensors register macroeconomic downturns simultaneously with or prior to official state reporting.
-4. **Oil Dependency Neutrality ($\beta_3 = 0.0008, p = 0.265$)**: Indicates that resource capital injected into urban consumer and financial hubs offsets the spatial isolation of extraction fields.
+1. **Baseline Elasticity (β_1 = 0.0286, p < 0.001)**: Confirms a strong, statistically significant positive coupling between nighttime lights and formal economic output globally.
+2. **Development Asymmetry (β_2 = -0.0029, p < 0.001)**: Reflects structural differences in growth patterns—emerging markets expand light footprints via horizontal urban sprawl, whereas advanced post-industrial states display energy-efficient, capital-intensive expansion.
+3. **Crisis Sensitivity (Sub-H_4)**: Empirical evaluation during the 2008 Great Recession proves that orbital sensors register macroeconomic downturns simultaneously with or prior to official state reporting.
+4. **Oil Dependency Neutrality (β_3 = 0.0008, p = 0.265)**: Indicates that resource capital injected into urban consumer and financial hubs offsets the spatial isolation of extraction fields.
 
 ---
 
@@ -94,20 +94,6 @@ Panel Fixed Effects estimation results across the longitudinal dataset (1990–2
 }
 
 ```
-
-    <a
-    id="cy-effective-orcid-url"
-    class="underline"
-     href="https://orcid.org/0009-0003-4999-1861"
-     target="orcid.widget"
-     rel="me noopener noreferrer"
-     style="vertical-align: top">
-     <img
-        src="https://orcid.org/sites/default/files/images/orcid_16x16.png"
-        style="width: 1em; margin-inline-start: 0.5em"
-        alt="ORCID iD icon"/>
-      https://orcid.org/0009-0003-4999-1861
-    </a>
 
 ---
 
